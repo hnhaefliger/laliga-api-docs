@@ -561,7 +561,6 @@ orderType = {ASC, DESC} (opt)
     ]
 }
 ```
-```
 ### Get list of teams
 ```curl
 GET https://apim.laliga.com/public-service/api/v1/teams
