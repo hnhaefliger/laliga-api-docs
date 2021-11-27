@@ -480,15 +480,46 @@ orderType = {ASC, DESC} (opt)
     ]
 }
 ```
+### Get player info
+```curl
+GET https://apim.laliga.com/public-service/api/v1/players/{player_slug}
+```
+```json
+{
+    "player": {
+        "id": int,
+        "slug": str,
+        "name": str,
+        "nickname": str,
+        "firstname": str,
+        "lastname": str,
+        "gender": str,
+        "date_of_birth": str-timestamp,
+        "international": bool,
+        "country": {
+            "id": str
+        },
+        "roles": [
+            {
+                "id": int,
+                "name": str,
+                "female_name": str,
+                "slug": str,
+                "active": bool,
+                "opta_id": str,
+                "lde_id": int
+            },
+            ...
+        ],
+        "squad": dict
+    }
+}
+```
 ### Get list of team stats
 ```curl
 GET https://apim.laliga.com/public-service/api/v1/subscriptions/{subscription_slug}/teams/stats
 ```
 ```
-limit = int (opt)
-offset = int (opt)
-orderField = stat.{stat_name} (opt)
-orderType = {ASC,DESC} (opt)
 ```
 ```json
 ```
