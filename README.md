@@ -141,5 +141,65 @@ GET https://apim.laliga.com/public-service/api/v1/subscriptions/{competition_str
     }
 }
 ```
+### Get the current gameweek
 
+```curl
+GET https://apim.laliga.com/public-service/api/v1/subscriptions/laliga-santander-2021/current-gameweek
+```
+```json
+{
+    "gameweek": {
+        "id": int,
+        "week": int,
+        "name": str,
+        "shortname": str,
+        "date": str-timestamp
+    }
+}
+```
+### Get a list of calendar events
+
+```curl
+GET https://apim.laliga.com/public-service/api/v1/calendar
+```
+```
+startDate = str (YYYY-MM-DD) (opt)
+endDate = str (YYYY-MM-DD) (opt)
+competitionSlug = str (opt)
+offset = int (opt)
+```
+```json
+{
+    "calendars": [
+        {
+            "date": str-timestamp,
+            "calendar_gameweeks": [
+                {
+                    "competition": {
+                        "id": int,
+                        "name": str,
+                        "slug": str,
+                        "main": bool
+                    },
+                    "season": {
+                        "id": int,
+                        "name": str,
+                        "year": int,
+                        "slug": str
+                    },
+                    "gameweek": {
+                        "id": int,
+                        "week": int,
+                        "name": str,
+                        "shortname": str,
+                        "date": str-timestamp
+                    }
+                },
+                ...
+            ]
+        },
+        ...
+    ]
+}
+```
 ## /api/web
