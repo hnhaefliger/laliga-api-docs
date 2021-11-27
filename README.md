@@ -520,8 +520,131 @@ GET https://apim.laliga.com/public-service/api/v1/players/{player_slug}
 GET https://apim.laliga.com/public-service/api/v1/subscriptions/{subscription_slug}/teams/stats
 ```
 ```
+limit = int (opt)
+offset = int (opt)
+orderField = stat.{lost, points, position, games_played, games_pending, won, drawn, putthrough_blocked_distribution_won, possession_percentage, duels_won, ground_duels_won, corners_taken_incl_short_corners, times_tackled, unsuccessful_launches, total_successful_passes_excl_crosses_corners, gk_successful_distribution, offsides, goals_conceded_inside_box, aerial_duels_lost, total_shots, clearances_off_the_line, goals_conceded_outside_box, shots_off_target_inc_woodwork, goals_conceded, open_play_passes, points_gained_from_losing_positions, throw_ins_to_opposition_player, goal_conversion, penalty_goals_conceded, unsuccessful_crosses_open_play, total_passes, passing_accuracy, interceptions, successful_fifty_fifty, unsuccessful_layoffs, successful_short_passes, drops, total_red_cards, successful_crosses_corners, index, catches, successful_long_passes, throw_ins_to_own_player, unsuccessful_short_passes, blocks, foul_attempted_tackle, ground_duels_lost, duels_lost, unsuccessful_dribbles, tackles_won, successful_layoffs, unsuccessful_crosses_corners, successful_crosses_open_play, aerial_duels_won, last_man_tackle, handballs_conceded, successful_corners_into_box, tackles_lost, shots_on_conceded_outside_box, total_fouls_conceded, games_played, attempts_from_set_pieces, yellow_cards, left_foot_goals, putthrough_blocked_distribution, corners_won, duels, hit_woodwork, unsuccessful_passes_own_half, total_shots_conceded, goals, shots_on_conceded_inside_box, ground_duels, goals_from_inside_box, goals_from_outside_box, successful_passes_opposition_half, right_foot_goals, total_clearances, successful_launches, total_fouls_won, tackle_success, unsuccessful_passes_opposition_half, total_losses_of_possession, aerial_duels, clean_sheets, unsuccessful_long_passes, successful_dribbles, successful_passes_own_half, points_dropped_from_winning_positions, red_card_2nd_yellow, passing_opp_half, shooting_accuracy, key_passes_attempt_assists, recoveries, fifty_fifty, blocked_shots, successful_open_play_passes, gk_unsuccessful_distribution, goal_assists, shots_on_target_inc_goals, total_unsuccessful_passes_excl_crosses_corners, crossing_accuracy, unsuccessful_corners_into_box, penalties_conceded, home_goals, away_goals, total_players} (opt)
+orderType = {ASC, DESC} (opt)
 ```
 ```json
+{
+    "total": int,
+    "team_stats": [
+        {
+            "id": int,
+            "name": str,
+            "short_name": str,
+            "nick_name": str,
+            "slug": str,
+            "shield": {
+                "id": int,
+                "name": str,
+                "caption": str,
+                "url": str-url,
+                "resizes": {
+                    "xsmall": str-url,
+                    "small": str-url,
+                    "medium": str-url,
+                    "large": str-url,
+                    "xlarge": str-url
+                }
+            },
+            "stats": [
+                {
+                    "name": str,
+                    "stat": int
+                },
+                ...
+            ],
+            "opta_id": str,
+            "lde_id": int
+        },
+    ]
+}
+```
+```
+### Get list of teams
+```curl
+GET https://apim.laliga.com/public-service/api/v1/teams
+```
+```
+subscriptionSlug = str (opt)
+limit= int (opt)
+offset= int (opt)
+orderField = str (opt)
+orderType = {ASC, DESC} (opt)
+```
+```json
+{
+    "total": int,
+    "teams": [
+        {
+            "id": int,
+            "slug": str,
+            "name": str,
+            "nickname": str,
+            "boundname": str,
+            "shortname": str,
+            "sprite_status": str,
+            "club": {
+                "id": int,
+                "slug": str,
+                "name": str,
+                "nickname": str,
+                "boundname": str,
+                "shortname": str,
+                "selector_name": str
+            },
+            "shield": {
+                "id": int,
+                "name": str,
+                "url": str-url,
+                "resizes": {
+                    "xsmall": str-url,
+                    "small": str-url,
+                    "medium": str-url,
+                    "large": str-url,
+                    "xlarge": str-url
+                }
+            },
+            "competitions": array,
+            "opta_id": str
+        },
+        ...
+    ]
+}
 ```
 
+https://apim.laliga.com/public-service/api/v1/teams/{team-slug}
+
+https://apim.laliga.com/public-service/api/v1/teams/{team-slug}/squad-manager?limit=50&offset=0&orderField=id&orderType=DESC&seasonYear=2021
+
+https://apim.laliga.com/public-service/api/v1/teams/athletic-club/stats?subscriptionSlug=laliga-santander-2021
+
+https://apim.laliga.com/public-service/api/v1/transfers?competitionSlug=primera-division&teamTo=Athletic%20Club&orderField=date&orderType=DESC&offset=0&limit=15
+
+https://apim.laliga.com/public-service/api/v1/matches?seasonYear=2021&teamSlug=athletic-club&limit=100&status=notplayed&orderField=date&orderType=asc
+
+https://apim.laliga.com/public-service/api/v1/matches?seasonYear=2021&teamSlug=athletic-club&limit=100&status=played&orderField=date&orderType=asc
+
 ## /api/web
+
+### Verification headers
+```
+Ocp-Apim-Subscription-Key: ee7fcd5c543f4485ba2a48856fc7ece9
+```
+
+https://apim.laliga.com/webview/api/web/seasons/opta/2021/competitions/opta/23/rankings/players/group?stats%5B0%5D=stat.total_goals_ranking&stats%5B1%5D=stat.total_ontarget_attempt_ranking&stats%5B2%5D=stat.total_pass_ranking&stats%5B3%5D=stat.total_assists_ranking&stats%5B4%5D=stat.total_interception_ranking&stats%5B5%5D=stat.total_yellow_card_ranking&stats%5B6%5D=stat.total_red_card_ranking&stats%5B7%5D=stat.total_fouls_ranking&optaTeamId=t174
+
+https://apim.laliga.com/webview/api/web/subscriptions/laliga-santander-2021/week/15/matches
+
+https://apim.laliga.com/webview/api/web/gameweeks/2482/summary
+
+https://apim.laliga.com/webview/api/web/subscriptions/laliga-santander-2021/standing?week=15
+
+https://apim.laliga.com/webview/api/web/subscriptions/laliga-santander-2021/standing?orderField=homePosition&week=15
+
+https://apim.laliga.com/webview/api/web/subscriptions/laliga-santander-2021/standing?orderField=awayPosition&week=15
+
+https://apim.laliga.com/webview/api/web/subscriptions/116/teams/3/faqs
+
+https://apim.laliga.com/webview/api/web/seasons/opta/2021/competitions/opta/23/rankings/players/group?stats%5B0%5D=stat.total_goals_ranking&stats%5B1%5D=stat.total_ontarget_attempt_ranking&stats%5B2%5D=stat.total_pass_ranking&stats%5B3%5D=stat.total_assists_ranking&optaTeamId=t174
