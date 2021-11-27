@@ -10,8 +10,6 @@ Ocp-Apim-Subscription-Key: c13c3a8e2f6b46da9c5c425cf61fab3e (/v1)
 
 ### List active competitions
 
-The list includes non-laliga competitions.
-
 ```curl
 GET https://apim.laliga.com/public-service/api/v1/competitions
 ```
@@ -36,8 +34,6 @@ showInCalendar = bool (opt)
 }
 ```
 ### Get a list of related subscriptions
-
-The list includes non-laliga competitions.
 
 ```curl
 GET https://apim.laliga.com/public-service/api/v1/subscriptions
@@ -87,9 +83,7 @@ competitionSlug = str
     ]
 }
 ```
-### Get info about a competition
-
-This only works for certain competitions. e.g. "laliga-santander-2021" or "copa-del-rey-2020".
+### Get info about a subscription
 
 ```curl
 GET https://apim.laliga.com/public-service/api/v1/subscriptions/{subscription_slug}
