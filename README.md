@@ -9,12 +9,15 @@ Ocp-Apim-Subscription-Key: c13c3a8e2f6b46da9c5c425cf61fab3e (/v1)
 ```
 
 ### List active competitions
+
+The list includes non-laliga competitions.
+
 ```curl
 GET https://apim.laliga.com/public-service/api/v1/competitions
 ```
 ```
 limit = int (opt)
-orderType = {ASC/DESC} (opt)
+orderType = {ASC,DESC} (opt)
 showInCalendar = bool (opt)
 ```
 ```json
@@ -34,8 +37,109 @@ showInCalendar = bool (opt)
 ```
 
 ### Get info about a competition
+
+This only works for certain competitions. e.g. "laliga-santander-2021" or "copa-del-rey-2020".
+
+```curl
+GET https://apim.laliga.com/public-service/api/v1/subscriptions/{competition_string}
 ```
-https://apim.laliga.com/public-service/api/v1/subscriptions/laliga-santander-{start-year} 
+```json
+{
+    "subscription": {
+        "id": int,
+        "name": str,
+        "slug": str,
+        "season": str,
+        "season_name": str,
+        "year": int,
+        "teams": [
+            {
+                "id": int,
+                "slug": str,
+                "name": str,
+                "nickname": str,
+                "boundname": str,
+                "shortname": str,
+                "color": str (opt),
+                "color_secondary": str (opt),
+                "foundation": str-timestamp (opt),
+                "web": str-url (opt),
+                "sprite_status": str,
+                "shield": {
+                    "id": int,
+                    "name": str,
+                    "url": str-url,
+                    "resizes": {
+                        "xsmall": str-url,
+                        "small": str-url,
+                        "medium": str-url,
+                        "large": str-url,
+                        "xlarge": str-url
+                    }
+                },
+                "competitions": array,
+                "opta_id": str,
+                "lde_id": int
+            },
+            ...
+        ],
+        "rounds": [
+            {
+                "id": int,
+                "name": str,
+                "slug": str,
+                "position": int,
+                "has_groups": bool,
+                "type": str,
+                "status": str,
+                "num_gameweeks": int,
+                "gameweeks": [
+                    {
+                        "id": int,
+                        "week": int,
+                        "name": str,
+                        "shortname": str,
+                        "date": str-timestamp
+                    },
+                    ...
+                ],
+                "groups": array
+            },
+            ...
+        ],
+        "current_gameweek": {
+            "id": int,
+            "week": int,
+            "name": str,
+            "shortname": str,
+            "date": str-timestamp,
+            "round": {
+                "id": int,
+                "name": str,
+                "slug": str,
+                "position": int,
+                "has_groups": bool,
+                "type": str,
+                "status": str,
+                "gameweeks": array,
+                "groups": array
+            }
+        },
+        "current_gameweek_standing": {
+            "id": int,
+            "week": int,
+            "name": str,
+            "shortname": str,
+            "date": str-timestamp
+        },
+        "competition": {
+            "id": int,
+            "name": str,
+            "slug": str,
+            "main": bool
+        }
+    }
+}
 ```
 
 ## /api/web
