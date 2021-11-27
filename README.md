@@ -35,13 +35,64 @@ showInCalendar = bool (opt)
     ]
 }
 ```
+### Get a list of related subscriptions
 
+The list includes non-laliga competitions.
+
+```curl
+GET https://apim.laliga.com/public-service/api/v1/subscriptions
+```
+```
+competitionSlug = str
+```
+```json
+{
+    "total": int,
+    "subscriptions": [
+        {
+            "id": int,
+            "name": str,
+            "slug": str,
+            "season": str,
+            "season_name": str,
+            "year": int,
+            "teams": array,
+            "rounds": array,
+            "current_gameweek": {
+                "id": int,
+                "week": int,
+                "name": str,
+                "shortname": str,
+                "date": str-timestamp,
+                "round": {
+                    "id": int,
+                    "name": str,
+                    "slug": str,
+                    "position": int,
+                    "has_groups": bool,
+                    "type": str,
+                    "status": str,
+                    "gameweeks": array,
+                    "groups": array
+                }
+            },
+            "competition": {
+                "id": int,
+                "name": str,
+                "slug": str,
+                "main": bool
+            }
+        },
+        ...
+    ]
+}
+```
 ### Get info about a competition
 
 This only works for certain competitions. e.g. "laliga-santander-2021" or "copa-del-rey-2020".
 
 ```curl
-GET https://apim.laliga.com/public-service/api/v1/subscriptions/{competition_string}
+GET https://apim.laliga.com/public-service/api/v1/subscriptions/{subscription_slug}
 ```
 ```json
 {
@@ -197,6 +248,25 @@ offset = int (opt)
                 },
                 ...
             ]
+        },
+        ...
+    ]
+}
+```
+### Get completed gameweeks
+
+```curl
+GET https://apim.laliga.com/public-service/api/v1/subscriptions/{subscription_slug}/standing-gameweeks
+```
+```json
+{
+    "gameweeks": [
+        {
+            "id": int,
+            "week": int,
+            "name": str,
+            "shortname": str,
+            "date": str-timestamp
         },
         ...
     ]
