@@ -25,8 +25,8 @@ showInCalendar = bool (opt)
             "name": str,
             "slug": str,
             "main": bool,
-            "opta_id": str,
-            "lde_id": int
+            "opta_id": str (opt), 
+            "lde_id": int (opt)
         }, 
         ...
     ]
