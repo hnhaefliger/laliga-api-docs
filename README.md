@@ -612,18 +612,511 @@ orderType = {ASC, DESC} (opt)
     ]
 }
 ```
+### Get team info
+```curl
+GET https://apim.laliga.com/public-service/api/v1/teams/{team-slug}
+```
+```json
+{
+    "team": {
+        "id": int,
+        "slug": str,
+        "name": str,
+        "nickname": str,
+        "boundname": str,
+        "shortname": str,
+        "sprite_status": str,
+        "club": {
+            "id": int,
+            "slug": str,
+            "name": str,
+            "nickname": str,
+            "boundname": str,
+            "shortname": str,
+            "selector_name": str
+        },
+        "shield": {
+            "id": int,
+            "name": str,
+            "url": str-url,
+            "resizes": {
+                "xsmall": str-url,
+                "small": str-url,
+                "medium": str-url,
+                "large": str-url,
+                "xlarge": str-url
+            }
+        },
+        "competitions": [
+            {
+                "id": int,
+                "name": str,
+                "slug": str,
+                "main": bool
+            }
+        ],
+        "opta_id": str
+    }
+}
+```
+### Get list of players in team
+```curl
+GET https://apim.laliga.com/public-service/api/v1/teams/{team-slug}/squad-manager
+```
+```
+limit = int
+offset = int
+orderField = str
+orderType = {ASC, DESC}
+seasonYear = int
+```
+```json
+{
+    "total": int,
+    "squads": [
+        {
+            "id": int,
+            "shirt_number": int,
+            "current": bool,
+            "loan": bool,
+            "loan_to": bool,
+            "position": {
+                "id": 1,
+                "name": str,
+                "slug": str,
+                "plural_name": str,
+                "female_name": str,
+                "female_plural_name": str
+            },
+            "team": {
+                "id": ,
+                "slug": str,
+                "name": str,
+                "nickname": str,
+                "boundname": str,
+                "shortname": str,
+                "color": str,
+                "color_secondary": str,
+                "shirt_style": str,
+                "foundation": str-timestamp,
+                "web": str-url,
+                "sprite_status": str,
+                "competitions": array
+            },
+            "person": {
+                "id": int,
+                "name": str,
+                "nickname": str,
+                "firstname": str,
+                "lastname": str,
+                "gender": str,
+                "date_of_birth": str-timestamp,
+                "place_of_birth": str,
+                "weight": int,
+                "height": int,
+                "international": bool,
+                "country": {
+                    "id": str
+                },
+                "slug": str
+            },
+            "role": {
+                "id": 1,
+                "name": str,
+                "female_name": str,
+                "slug": str
+            },
+            "photos": {
+                "001": {
+                    "1024x1113": str-url,
+                    "128x139": str-url,
+                    "2048x2225": str-url,
+                    "256x278": str-url,
+                    "512x556": str-url,
+                    "64x70": str-url
+                },
+                "002": {
+                    "1024x1024": str-url,
+                    "128x128": str-url,
+                    "2048x2048": str-url,
+                    "256x256": str-url,
+                    "512x512": str-url,
+                    "64x64": str-url
+                },
+                "003": {
+                    "1024x1024": str-url,
+                    "128x128": str-url,
+                    "2048x2048": str-url,
+                    "256x256": str-url,
+                    "512x512": str-url,
+                    "64x64": str-url
+                }
+            },
+            "opta_id": str,
+            "lde_id": int
+        },
+        ...
+    ]
+}
+```
+### Get a team's stats in a subscription
+```curl
+GET https://apim.laliga.com/public-service/api/v1/teams/athletic-club/stats
+```
+```
+subscriptionSlug = str
+orderField = stat.{"lost", "points", "position", "games_played", "games_pending", "won", "drawn", "possession_percentage", "recoveries", "total_fouls_conceded", "ground_duels_won", "shots_on_conceded_inside_box", "shots_off_target_inc_woodwork", "set_pieces_goals", "duels", "corners_taken_incl_short_corners", "unsuccessful_dribbles", "duels_won", "points_dropped_from_winning_positions", "aerial_duels_lost", "gk_unsuccessful_distribution", "corners_won", "unsuccessful_passes_own_half", "drops", "shots_on_target_inc_goals", "aerial_duels", "hit_woodwork", "successful_crosses_corners", "catches", "red_card_2nd_yellow", "offsides", "goals_from_outside_box", "successful_passes_opposition_half", "fifty_fifty", "total_successful_passes_excl_crosses_corners", "unsuccessful_short_passes", "successful_passes_own_half", "unsuccessful_launches", "successful_fifty_fifty", "crossing_accuracy", "total_clearances", "passing_accuracy", "goal_conversion", "total_fouls_won", "unsuccessful_long_passes", "blocks", "unsuccessful_crosses_open_play", "total_unsuccessful_passes_excl_crosses_corners", "aerial_duels_won", "open_play_passes", "headed_goals", "foul_attempted_tackle", "successful_open_play_passes", "total_losses_of_possession", "goals_conceded_inside_box", "goals", "ground_duels", "straight_red_cards", "ground_duels_lost", "games_played", "unsuccessful_layoffs", "successful_launches", "total_red_cards", "interceptions", "right_foot_goals", "penalties_taken", "penalty_goals_conceded", "clean_sheets", "throw_ins_to_own_player", "unsuccessful_passes_opposition_half", "passing_opp_half", "successful_layoffs", "duels_lost", "tackle_success", "successful_corners_into_box", "clearances_off_the_line", "putthrough_blocked_distribution_won", "unsuccessful_corners_into_box", "attempts_from_set_pieces", "penalties_conceded", "successful_crosses_open_play", "yellow_cards", "last_man_tackle", "goals_from_inside_box", "throw_ins_to_opposition_player", "successful_dribbles", "shots_on_conceded_outside_box", "own_goals_accrued", "index", "penalty_goals", "tackles_lost", "key_passes_attempt_assists", "total_passes", "total_shots_conceded", "putthrough_blocked_distribution", "shooting_accuracy", "unsuccessful_crosses_corners", "successful_long_passes", "goal_assists", "blocked_shots", "gk_successful_distribution", "points_gained_from_losing_positions", "handballs_conceded", "tackles_won", "total_shots", "successful_short_passes", "times_tackled", "goals_conceded", "foul_won_penalty", "home_goals", "away_goals", "total_players"}
+orderType = {ASC, DESC} (opt)
+```
+```json
+{
+    "team_stats": {
+        "id": int,
+        "name": str,
+        "short_name": str,
+        "nick_name": str,
+        "slug": str,
+        "shield": {
+            "id": int,
+            "name": str,
+            "caption": str,
+            "url": str-url,
+            "resizes": {
+                "xsmall": str-url,
+                "small": str-url,
+                "medium": str-url,
+                "large": str-url,
+                "xlarge": str-url
+            }
+        },
+        "stats": [
+            {
+                "name": str,
+                "stat": int
+            },
+            ...
+        ],
+        "opta_id": str,
+        "lde_id": int
+    }
+}
 
-https://apim.laliga.com/public-service/api/v1/teams/{team-slug}
-
-https://apim.laliga.com/public-service/api/v1/teams/{team-slug}/squad-manager?limit=50&offset=0&orderField=id&orderType=DESC&seasonYear=2021
-
-https://apim.laliga.com/public-service/api/v1/teams/athletic-club/stats?subscriptionSlug=laliga-santander-2021
-
-https://apim.laliga.com/public-service/api/v1/transfers?competitionSlug=primera-division&teamTo=Athletic%20Club&orderField=date&orderType=DESC&offset=0&limit=15
-
-https://apim.laliga.com/public-service/api/v1/matches?seasonYear=2021&teamSlug=athletic-club&limit=100&status=notplayed&orderField=date&orderType=asc
-
-https://apim.laliga.com/public-service/api/v1/matches?seasonYear=2021&teamSlug=athletic-club&limit=100&status=played&orderField=date&orderType=asc
+```
+### Get a list of transfers
+```curl
+https://apim.laliga.com/public-service/api/v1/transfers
+```
+```
+competitionSlug = str
+teamTo = str
+orderField = str
+orderType= {ASC, DESC}
+offset = int
+limit = int
+```
+```json
+{
+    "total": 3,
+    "transfers": [
+        {
+            "id": int,
+            "name": str,
+            "date": str-timestamp,
+            "team_from": {
+                "id": int,
+                "slug": str,
+                "name": str,
+                "nickname": str,
+                "boundname": str,
+                "shortname": str,
+                "color": str,
+                "color_secondary": str,
+                "foundation": str-timestamp,
+                "web": str,
+                "sprite_status": str,
+                "shield": {
+                    "id": int,
+                    "name": str,
+                    "caption": str,
+                    "url": str-url,
+                    "resizes": {
+                        "xsmall": str-url,
+                        "small": str-url,
+                        "medium": str-url,
+                        "large": str-url,
+                        "xlarge": str-url
+                    }
+                },
+                "competitions": array
+            },
+            "team_to": {
+                "id": int,
+                "slug": str,
+                "name": str,
+                "nickname": str,
+                "boundname": str,
+                "shortname": str,
+                "color": str,
+                "color_secondary": str,
+                "foundation": str-timestamp,
+                "web": str,
+                "sprite_status": str,
+                "shield": {
+                    "id": int,
+                    "name": str,
+                    "caption": str,
+                    "url": str-url,
+                    "resizes": {
+                        "xsmall": str-url,
+                        "small": str-url,
+                        "medium": str-url,
+                        "large": str-url,
+                        "xlarge": str-url
+                    }
+                },
+                "competitions": array
+            },
+            "competition": {
+                "id": int,
+                "name": str,
+                "slug": str,
+                "main": bool
+            },
+            "procedure": {
+                "id": int,
+                "name": str,
+                "slug": str
+            },
+            "nationality_birth": {
+                "id": str,
+                "name": str
+            },
+            "state": str,
+            "squad": {
+                "id": int,
+                "shirt_number": 12,
+                "current": true,
+                "loan": false,
+                "loan_to": false,
+                "team": {
+                    "id": 3,
+                    "slug": str,
+                    "name": str,
+                    "nickname": str,
+                    "boundname": str,
+                    "shortname": str,
+                    "color": str,
+                    "color_secondary": str,
+                    "foundation": str-timestamp,
+                    "web": str-url,
+                    "sprite_status": str,
+                    "competitions": [
+                        {
+                            "id": int,
+                            "name": str,
+                            "slug": str,
+                            "main": bool
+                        }
+                    ]
+                },
+                "person": {
+                    "id": int,
+                    "name": str,
+                    "nickname": str,
+                    "firstname": str,
+                    "lastname": str,
+                    "gender": str,
+                    "date_of_birth": str-timestamp,
+                    "place_of_birth": str,
+                    "weight": int,
+                    "height": int,
+                    "international": bool,
+                    "country": {
+                        "id": str
+                    },
+                    "slug": str
+                },
+                "role": {
+                    "id": int,
+                    "name": str,
+                    "female_name": str,
+                    "slug": str
+                },
+                "photos": [
+                    {
+                        "url": str-url,
+                        "string_size": str,
+                        "format": str
+                    },
+                    ...
+                ],
+                "opta_id": str,
+                "lde_id": int
+            }
+        },
+        ...
+    ]
+}
+```
+# Get a list of matches played by a team
+```curl
+https://apim.laliga.com/public-service/api/v1/matches
+```
+```
+seasonYear = int
+teamSlug = str
+limit = int
+status = {played, notplayed}
+orderField = str
+orderType = str
+```
+```json
+{
+    "total": int,
+    "matches": [
+        {
+            "id": int,
+            "name": str,
+            "slug": str,
+            "date": str-timestamp,
+            "time": str-timestamp,
+            "hashtag": str,
+            "competition": {
+                "id": int,
+                "name": str,
+                "slug": str,
+                "main": bool,
+                "opta_id": str,
+                "lde_id": int
+            },
+            "status": str,
+            "note": str,
+            "home_team": {
+                "id": int,
+                "slug": str,
+                "name": str,
+                "nickname": str,
+                "boundname": str,
+                "shortname": str,
+                "color": str,
+                "color_secondary": str,
+                "foundation": str-timestamp,
+                "web": str,
+                "sprite_status": str,
+                "shield": {
+                    "id": int,
+                    "name": str,
+                    "caption": str,
+                    "url": str-url,
+                    "resizes": {
+                        "xsmall": str-url,
+                        "small": str-url,
+                        "medium": str-url,
+                        "large": str-url,
+                        "xlarge": str-url
+                    }
+                },
+                "competitions": array,
+                "opta_id": str,
+                "lde_id": int
+            },
+            "away_team": {
+                "id": int,
+                "slug": str,
+                "name": str,
+                "nickname": str,
+                "boundname": str,
+                "shortname": str,
+                "color": str,
+                "color_secondary": str,
+                "foundation": str-timestamp,
+                "web": str,
+                "sprite_status": str,
+                "shield": {
+                    "id": int,
+                    "name": str,
+                    "caption": str,
+                    "url": str-url,
+                    "resizes": {
+                        "xsmall": str-url,
+                        "small": str-url,
+                        "medium": str-url,
+                        "large": str-url,
+                        "xlarge": str-url
+                    }
+                },
+                "competitions": array,
+                "opta_id": str,
+                "lde_id": int
+            },
+            "gameweek": {
+                "id": int,
+                "week": int,
+                "name": str,
+                "shortname": str,
+                "date": str-timestamp
+            },
+            "venue": {
+                "id": int,
+                "name": str,
+                "latitude": str,
+                "longitude": str,
+                "capacity": int,
+                "address": str,
+                "timezone": str,
+                "city": str,
+                "slug": str,
+                "opta_id": str,
+                "lde_id": int
+            },
+            "persons_role": [
+                {
+                    "person": {
+                        "id": int,
+                        "name": str,
+                        "nickname": str,
+                        "firstname": str,
+                        "lastname": str,
+                        "gender": str,
+                        "international": bool,
+                        "slug": str
+                    },
+                    "role": {
+                        "id": int,
+                        "name": str,
+                        "female_name": str,
+                        "slug": str
+                    },
+                    "opta_id": str,
+                    "lde_id": int
+                },
+                ...
+            ],
+            "season": {
+                "id": int,
+                "name": str,
+                "year": int,
+                "slug": str,
+                "opta_id": str,
+                "lde_id": int
+            },
+            "is_brand_day": bool,
+            "temperature": {
+                "enabled_historical": bool,
+                "enabled_forecast": bool
+            },
+            "ball": {
+                "id": int,
+                "name": str,
+                "image": str
+            },
+            "opta_id": str,
+            "lde_id": int
+        },
+        ...
+    ]
+}
+```
 
 ## /api/web
 
