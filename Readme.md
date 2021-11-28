@@ -4,7 +4,7 @@
 - 
 
 ### In progress
-- [LaLiga]("LaLiga.md")
+- [LaLiga](LaLiga.md)
 
 ### To-do
 - Bundesliga
