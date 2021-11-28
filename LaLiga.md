@@ -1,4 +1,4 @@
-# laliga-api-docs
+# LaLiga
 
 Documentation for the LaLiga data api
 
